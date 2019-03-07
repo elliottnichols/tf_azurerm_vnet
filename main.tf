@@ -1,9 +1,6 @@
-provider "azurerm" {}
-provider "random" {}
-
 locals {
   module_tags = {
-    deploy-detail = "test-detail"
+    deployment-details = "test-detail"
   }
 }
 
