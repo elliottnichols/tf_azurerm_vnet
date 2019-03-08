@@ -1,16 +1,10 @@
-locals {
-  module_tags = {
-    deployment-details = "test-detail"
-  }
-}
-
 resource "azurerm_virtual_network" "module" {
   resource_group_name = "${var.rg}"
   name                = "${var.vnet_name}"
   location            = "${var.location}"
   address_space       = "${var.address_space}"
   dns_servers         = "${var.dns_servers}"
-  tags                = "${merge(local.module_tags,var.common_tags,var.tags)}"
+  tags                = "${merge(var.common_tags,var.tags)}"
 }
 
 resource "azurerm_subnet" "module" {
