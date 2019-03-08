@@ -22,14 +22,17 @@ jobs:
       # if: type = commit
       install: true
       script:
-        # Run container in detached state
-        - sudo docker run --detach --privileged --volume="${PWD}":/go/src/${TRAVIS_REPO_SLUG}:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro ${IMAGE_NAME} /usr/lib/systemd/systemd > /tmp/container_id
-        # Check syntax of ansible playbook
-        - sudo docker exec "$(cat /tmp/container_id)" terraform fmt -check=true -diff=true -list=true
-        # Run ansible playbook
-        - sudo docker exec "$(cat /tmp/container_id)" terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
-        # Clean up
-        - sudo docker stop "$(cat /tmp/container_id)"
+        - pwd
+        - ls -lha
+        - docker run -d -rm -v ${PWD}:/go/src/${TRAVIS_REPO_SLUG}:rw ${IMAGE_NAME} "cd ${TRAVIS_REPO_SLUG}; terraform fmt -check=true -diff=true -list=true"
+        # # Run container in detached state
+        # - docker run --detach --privileged --volume="${PWD}":/go/src/${TRAVIS_REPO_SLUG}:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro ${IMAGE_NAME} /usr/lib/systemd/systemd > /tmp/container_id
+        # # Check syntax of ansible playbook
+        # - sudo docker exec "$(cat /tmp/container_id)" terraform fmt -check=true -diff=true -list=true
+        # # Run ansible playbook
+        # - sudo docker exec "$(cat /tmp/container_id)" terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
+        # # Clean up
+        # - sudo docker stop "$(cat /tmp/container_id)"
 
     # - stage: full
     #   if: type = push AND branch = master
