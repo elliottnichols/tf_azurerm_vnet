@@ -22,13 +22,14 @@ jobs:
       # if: type = commit
       install: true
       script:
-        - docker exec -it ${IMAGE_NAME} /bin/bash
+        - docker run -it -v $(pwd):/go/src/${TRAVIS_REPO_SLUG} ${IMAGE_NAME} /bin/bash
         - pwd
         - ls -lha
         - ls /root/
         - ls /go/src/
+        - cd /go/src/${TRAVIS_REPO_SLUG}
         - terraform fmt -check=true -diff=true -list=true
-        # - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
+        - terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
     # - stage: full
     #   if: type = push AND branch = master
     #   install: true
