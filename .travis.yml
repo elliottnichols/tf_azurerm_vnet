@@ -14,7 +14,7 @@ env:
 
 before_install:
   - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-  - docker run ${IMAGE_NAME} /bin/bash -c "pwd; ls -lha"
+  - docker pull ${IMAGE_NAME}
 
 jobs:
   include:
@@ -22,8 +22,8 @@ jobs:
       # if: type = commit
       install: true
       script:
-        - terraform fmt -check=true -diff=true -list=true
-        - terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
+        - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true
+        - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
     # - stage: full
     #   if: type = push AND branch = master
     #   install: true
