@@ -24,7 +24,7 @@ jobs:
       script:
         - pwd
         - ls -lha
-        - docker run -v ${PWD}:/go/src/${TRAVIS_REPO_SLUG}:rw ${IMAGE_NAME} "cd ${TRAVIS_REPO_SLUG}; terraform fmt -check=true -diff=true -list=true"
+        - docker run -v ${PWD}:/go/src/${TRAVIS_REPO_SLUG}:rw ${IMAGE_NAME} "ls -lha; pwd; cd /go/src/${TRAVIS_REPO_SLUG}; ls -lha; terraform fmt -check=true -diff=true -list=true"
         # # Run container in detached state
         # - docker run --detach --privileged --volume="${PWD}":/go/src/${TRAVIS_REPO_SLUG}:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro ${IMAGE_NAME} /usr/lib/systemd/systemd > /tmp/container_id
         # # Check syntax of ansible playbook
