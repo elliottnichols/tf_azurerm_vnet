@@ -17,7 +17,7 @@ env:
 jobs:
   include:
     - stage: validate
-      if: type = commit
+      # if: type = commit
       install: true
       script:
         - docker run ${IMAGE_NAME} terraform --validate
