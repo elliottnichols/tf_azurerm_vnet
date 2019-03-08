@@ -22,8 +22,13 @@ jobs:
       # if: type = commit
       install: true
       script:
-        - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true
-        - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
+        - docker exec -it ${IMAGE_NAME} /bin/bash
+        - pwd
+        - ls -lha
+        - ls /root/
+        - ls /go/src/
+        - terraform fmt -check=true -diff=true -list=true
+        # - docker run ${IMAGE_NAME} terraform fmt -check=true -diff=true -list=true ./test/case1/scenario1/
     # - stage: full
     #   if: type = push AND branch = master
     #   install: true
