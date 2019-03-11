@@ -6,7 +6,7 @@ branches:
   only:
   - master
   - /^deploy-.*$/
-sudo: required
+sudo: false
 services:
   - docker
 env:
@@ -18,14 +18,12 @@ before_install:
 
 jobs:
   include:
-    - stage: validate
+    - stage: Validate
       # if: type = commit
       install: true
       script:
-        - docker run -v ${PWD}:/go/src/module:rw ${IMAGE_NAME} /bin/bash -c "cd /go/src/module; terraform fmt -check=true -diff=true -list=true"
-    -
-      script:
-        - docker run -v ${PWD}:/go/src/module:rw ${IMAGE_NAME} /bin/bash -c "cd /go/src/module; terraform fmt -check=true -diff=true -list=true test/case1/scenario1"
+        - docker run -v ${PWD}:/go/src/module:ro ${IMAGE_NAME} /bin/bash -c "cd /go/src/module; terraform fmt -check=true -diff=true -list=true; terraform validate -check-variables=false"
+
         # # Run container in detached state
         # - docker run --detach --privileged --volume="${PWD}":/go/src/${TRAVIS_REPO_SLUG}:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro ${IMAGE_NAME} /usr/lib/systemd/systemd > /tmp/container_id
         # # Check syntax of ansible playbook
