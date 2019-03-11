@@ -1,4 +1,5 @@
-language: go1
+language: go
+dist: bionic
 git:
   quiet: true
   depth: 10
