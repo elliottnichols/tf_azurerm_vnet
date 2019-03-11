@@ -1,4 +1,4 @@
-language: generic
+language: go1
 git:
   quiet: true
   depth: 10
